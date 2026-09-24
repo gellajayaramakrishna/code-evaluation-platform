@@ -1,0 +1,89 @@
+{
+  "info": {
+    "name": "Aether Judge",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base", "value": "http://localhost:8000" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\":\"tester\",\"email\":\"tester@aether.dev\",\"password\":\"tester123\"}"
+            },
+            "url": "{{base}}/api/auth/register"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/x-www-form-urlencoded" }],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "username", "value": "demo" },
+                { "key": "password", "value": "demo123" }
+              ]
+            },
+            "url": "{{base}}/api/auth/login"
+          }
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{base}}/api/auth/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Problems",
+      "item": [
+        {
+          "name": "List",
+          "request": { "method": "GET", "url": "{{base}}/api/problems" }
+        },
+        {
+          "name": "Get two-sum",
+          "request": { "method": "GET", "url": "{{base}}/api/problems/two-sum" }
+        }
+      ]
+    },
+    {
+      "name": "Submissions",
+      "item": [
+        {
+          "name": "Submit Python",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"problem_id\":1,\"language\":\"python\",\"source_code\":\"print(0,1)\"}"
+            },
+            "url": "{{base}}/api/submissions"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Metrics",
+      "request": { "method": "GET", "url": "{{base}}/api/metrics" }
+    }
+  ]
+}
