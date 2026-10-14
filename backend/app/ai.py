@@ -204,8 +204,9 @@ def retrieve_hints(problem_id: int, query: str, docs: list[str], k: int = 3) -> 
     return ranked[:k]
 
 
-def generate_hint(problem_title: str, statement: str, docs: list[str], code: str, language: str) -> dict:
-    retrieved = retrieve_hints(0, code or statement[:200], docs)
+def generate_hint(problem_title: str, statement: str, docs: list[str], code: str, language: str, problem_id: int = 0) -> dict:
+    query = f"{problem_title}\n{(code or statement)[:500]}"
+    retrieved = retrieve_hints(problem_id, query, docs)
     context = "\n".join(retrieved) if retrieved else statement[:600]
     system = (
         "Give a small nudge, not a full solution. One or two sentences. "
