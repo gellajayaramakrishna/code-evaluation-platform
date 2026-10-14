@@ -58,7 +58,10 @@ def hint(body: HintIn, user: User = Depends(get_current_user), db: Session = Dep
         docs.append(p.hint)
     if p.editorial:
         docs.append(p.editorial[:800])
-    return ai_mod.generate_hint(p.title, p.statement, docs, body.source_code or "", body.language or "python")
+        ai_mod.index_hints(p.id, docs)
+    return ai_mod.generate_hint(
+        p.title, p.statement, docs, body.source_code or "", body.language or "python", problem_id=p.id
+    )
 
 
 @router.post("/complexity")
